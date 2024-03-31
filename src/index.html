@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Midi Fighter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0033aa">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+
+<body>
+    <div class="mf-container">
+        <div class="app-actions">
+            <div class="performance-mode active">
+                <img id="open" class="open" src="./folder.svg">
+                <img id="edit" class="edit" src="./edit.svg">
+            </div>
+            <div class="edit-mode">
+                <div>
+                    <div><img id="cancel" class="cancel" src="./cancel.svg"></div>
+                    <div><img id="update" class="save" src="./save.svg"></div>
+                </div>
+                <div>
+                    <div class="encoder-visual">
+                        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="indicator" r="35"
+                                stroke-dasharray="40 15 0 15 0 15 0 15 0 15 0 15 0 15 0 15 0 15 0 15"
+                                stroke-dashoffset="-35" stroke-width="10" cx="50%" cy="50%" stroke-linecap="round" />
+                            <circle class="rgb" r="35" stroke-dasharray="40 150" stroke-dashoffset="-35"
+                                stroke-width="10" cx="50%" cy="50%" stroke-linecap="round" />
+                            <circle class="encoder" r="25" stroke-width="6" cx="50%" cy="50%" />
+                        </svg>
+                    </div>
+                    <select class="animation-type">
+                        <option value="0">Off </option>
+                        <option value="1">RGB Strobe </option>
+                        <option value="2">RGB Pulse</option>
+                        <option value="3">RGB Brightness</option>
+                        <option value="4">RGB Rainbow</option>
+                        <option value="5">Indicator Strobe </option>
+                        <option value="6">Indicator Pulse</option>
+                        <option value="7">Indicator Brightness</option>
+                    </select>
+                    <select class="animation-value"></select>
+                </div>
+            </div>
+        </div>
+        <div class="system-actions">
+            <button class="colour">Colour</button>
+            <button class="test">Test</button>
+            <img class="refresh" src="./refresh.svg">
+            <img class="info" src="./info.svg">
+        </div>
+        <h2 class="title"></h2>
+
+        <h3>Bank <span class="page"></span></h3>
+        <div class="message"></div>
+
+        <div class="controller">
+            <div class="side left"></div>
+            <div class="encoders"></div>
+            <div class="side right"></div>
+        </div>
+    </div>
+
+    <template id="tmplSide">
+        <div>
+            <div class="text-container">
+                <div>Shift Hold</div>
+            </div>
+            <div class="button"></div>
+        </div>
+    </template>
+
+    <template id="tmplSideInput">
+        <div>
+            <div class="text-container">
+                <input></input>
+            </div>
+            <div class="button"></div>
+        </div>
+    </template>
+
+    <template id="tmplEncoder">
+        <div class="button-container">
+            <div class="button">
+                <svg viewBox="0 0 87 87" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="background" r="36" stroke-width="15" cx="50%" cy="50%" />
+                    <circle class="indicator" r="35"
+                        stroke-dasharray="40 15 0 15 0 15 0 15 0 15 0 15 0 15 0 15 0 15 0 15" stroke-dashoffset="-35"
+                        stroke-width="10" cx="50%" cy="50%" stroke-linecap="round" />
+                    <circle class="rgb" r="35" stroke-dasharray="40 150" stroke-dashoffset="-35" stroke-width="10"
+                        cx="50%" cy="50%" stroke-linecap="round" />
+                    <circle class="encoder" r="23" stroke-width="6" cx="50%" cy="50%" />
+                </svg>
+            </div>
+            <div class="text-container">
+                <div class="shift-encoder"></div>
+                <div class="switch-encoder"></div>
+                <div class="rotary-encoder"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tmplEncoderInput">
+        <div class="button-container">
+            <div class="button"></div>
+            <div class="text-container">
+                <input class="shift-encoder"></input>
+                <input class="switch-encoder"></input>
+                <input class="rotary-encoder"></input>
+            </div>
+        </div>
+    </template>
+</body>
+
+</html>
