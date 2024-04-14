@@ -1,0 +1,170 @@
+img {
+    height: 30px;
+}
+
+.message {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}
+
+.system-actions {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+
+    img {
+        cursor: pointer;
+    }
+
+    .midi-out {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.85rem;
+    }
+}
+
+.app-actions {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        cursor: pointer;
+    }
+
+    select {
+        height: 30px;
+    }
+
+    >div {
+        display: none;
+        min-width: 40px;
+        padding: 0 8px;
+    }
+
+    .encoder-visual {
+        width: 40px;
+        height: 40px;
+    }
+
+    // .lighting {
+    .active {
+        display: flex;
+    }
+
+    // }
+
+    // .performance {
+    //     &.active {
+    //         display: flex;
+    //     }
+    // }
+
+    // .edit {
+    //     &.active {
+    //         display: flex;
+    //     }
+    // }
+}
+
+.controller {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    .encoders {
+        z-index: 2;
+        padding: 8px;
+        background-color: var(--light-grey);
+        width: 600px;
+        height: 500px;
+        border: 5px solid grey;
+        border-radius: 20px;
+        display: grid;
+        grid-gap: 4px;
+        grid-template-columns: repeat(4, 1fr);
+
+        &.lighting .button-container {
+            cursor: pointer;
+        }
+
+        .button-container {
+            position: relative;
+            border: 1px solid var(--light-grey);
+            background-color: var(--darkest-grey);
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+
+            .button {
+                z-index: 3;
+                width: 82px;
+                height: 82px;
+            }
+
+            .saved {
+                .encoder {
+                    fill: var(--notification)
+                }
+            }
+
+            .background {
+                stroke: var(--encoder-background);
+                fill: none;
+            }
+
+            .indicator {
+                stroke: var(--encoder-indicator);
+                fill: none;
+            }
+
+            .rgb {
+                stroke: var(--encoder-rgb);
+                fill: none;
+            }
+
+            .encoder {
+                stroke: var(--encoder-border);
+                fill: var(--encoder);
+            }
+
+
+            &.selected {
+                .encoder {
+                    fill: var(--active);
+                }
+
+                .rgb {
+                    &.active {
+                        stroke: var(--highlight);
+                    }
+                }
+
+                .indicator {
+                    &.active {
+                        stroke: var(--highlight);
+                    }
+                }
+            }
+
+            &.saved {
+                .encoder {
+                    fill: var(--highlight);
+                }
+            }
+        }
+    }
+}

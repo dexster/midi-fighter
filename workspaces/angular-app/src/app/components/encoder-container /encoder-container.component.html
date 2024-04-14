@@ -1,0 +1,13 @@
+@if (mode() === 'performance') {
+<div>
+    <!-- TODO This must not use 2 way binding -->
+    <app-encoder [mode]="mode()" [encoder]="encoder()" [(rgbActive)]="rgbActive"
+        [(indicatorActive)]="indicatorActive" />
+</div>
+} @else {
+<div (click)="setSelected()">
+    {{selectedEncoders()}}
+    <app-encoder [mode]="mode()" [encoder]="encoder()" [selected]="selected()" [(rgbActive)]="rgbActive"
+        [(indicatorActive)]="indicatorActive" />
+</div>
+}

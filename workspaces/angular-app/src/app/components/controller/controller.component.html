@@ -1,0 +1,50 @@
+<div #mfContainer class="mf-container">
+	<app-settings #settings [activeBank]="activeBank()" [selectedButtons]="selectedButtons()"
+		[selectedEncoders]="selectedEncoders()" [controllerData]="controllerData()" [(mode)]="mode"
+		[(rgbActive)]="rgbActive" [(indicatorActive)]="indicatorActive" />
+
+	@if (controllerData()) {
+	<div class="title" [ngClass]="{'inactive': !midiService.midiFighterAvailable()}">
+		<h2>
+			@if (mode() !== 'edit') {
+			{{ controllerData()!.title }}
+			} @else if (mode() === 'edit') {
+			<input [(ngModel)]="controllerData()!.title" />
+			}
+		</h2>
+		<div class="cable">
+			<div>x</div>
+			<img src="./assets/usb-cable.svg" />
+		</div>
+	</div>
+
+	<div class="sub-title">
+		<h3>Bank {{activeBank() + 1}}</h3>
+		<img src="./assets/shift.svg" [ngClass]="{'active': mode() === 'edit'}"
+			(click)="shiftActive.set(!shiftActive())" />
+	</div>
+
+	@if (settings.showMessage()) {
+	{{message()?.actionType}} ch: {{message()?.channel}} cc: {{message()?.cc}} velocity: {{message()?.velocity}}
+	}
+
+	<div class="controller">
+		<app-side [(selectedButtons)]="selectedButtons" [mode]="mode()"
+			[buttons]="controllerData()![actionType()][activeBank()].leftSide" side="left" [(shiftActive)]="shiftActive"
+			[(activeBank)]="activeBank" />
+		<div class="encoders" [ngClass]="{ active: mode() === 'lighting' }">
+			@for (
+			encoder of controllerData()![actionType()][activeBank()].encoder;
+			track encoder.cc
+			) {
+			<app-encoder [(selectedEncoders)]="selectedEncoders" [mode]="mode()" [encoder]="encoder"
+				[rgbActive]="rgbActive()" [indicatorActive]="indicatorActive()" [activeBank]="activeBank()"
+				[shiftActive]="shiftActive()" />
+			}
+		</div>
+		<app-side [(selectedButtons)]="selectedButtons" [mode]="mode()"
+			[buttons]="controllerData()![actionType()][activeBank()].rightSide" side="right"
+			[(activeBank)]="activeBank" />
+	</div>
+	}
+</div>

@@ -1,0 +1,57 @@
+@if (mode() === 'performance') {
+<div>
+    <ng-container *ngTemplateOutlet="tmplEncoder" />
+</div>
+} @else {
+<div (click)="setSelected()">
+    <div *ngTemplateOutlet="tmplEncoder"></div>
+</div>
+}
+
+<ng-template #tmplEncoder>
+    <div class="button-container cc{{ activeBank() * 16 + +encoder()!.cc }}">
+        <div class="button" [ngClass]="{'selected': selected && ['lighting', 'shift'].includes(mode()!)}">
+            <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+                <circle class="background" r="37" stroke-width="15" cx="50%" cy="50%" />
+
+                <circle class="indicator" r="37"
+                    stroke-dasharray="30 16.9 0 16.9 0 16.9 0 16.9 0 16.9 0 16.9 0 16.9 0 16.9 0 16.9 0 16.9 0 16.9 0"
+                    stroke-linecap="round" stroke-width="10" cx="50%" cy="50%" transform="rotate(65, 45 45)" />
+
+                <circle class="indicator-highlight" [ngClass]="{ active: indicatorActive() || endlessActive(), 'endless': encoder()?.encoderType === '3FH/41H'}" r="37"
+                    attr.stroke-dasharray="{{dashArray()}}" stroke-linecap="round" stroke-width="10" cx="50%" cy="50%"
+                    transform="rotate(65, 45 45)" />
+
+                <circle class="rgb" [ngClass]="{ active: rgbActive() }" r="37" stroke-dasharray="35 160"
+                    stroke-dashoffset="-40" stroke-width="10" cx="50%" cy="50%" stroke-linecap="round" />
+
+                <circle class="encoder" [ngClass]="{ active: switchActive() }" r="23" stroke-width="6" cx="50%" cy="50%" />
+            </svg>
+        </div>
+        <div class="text-container {{mode()}}">
+            @switch (mode()) {
+            @case ('performance') {
+            <div class="shift-encoder">{{ encoder()?.encoderShift }}</div>
+            <div class="switch-encoder">{{ encoder()?.switch }}</div>
+            <div class="rotary-encoder">{{ encoder()?.encoder }}</div>
+            }
+            @case ('edit') {
+            <input class="shift-encoder" [(ngModel)]="encoder()!.encoderShift" />
+            <input class="switch-encoder" [(ngModel)]="encoder()!.switch" />
+            <input class="rotary-encoder" [(ngModel)]="encoder()!.encoder" />
+            }
+            @case ('lighting' && encoder()?.animation != null) {
+            <div>{{animationService.getAnimationType(encoder()!.animation!)}}</div>
+            <div>{{encoder()!.animation}}</div>
+            } @case ('midi') {
+            <div></div>
+            <div><input type="number" class="midi value" [(ngModel)]="encoder()!.cc" /></div>
+            <div class="range">
+                <input type="number" class="midi min" [(ngModel)]="encoder()!.min" />
+                <input type="number" class="midi max" [(ngModel)]="encoder()!.max" />
+            </div>
+            }
+            }
+        </div>
+    </div>
+</ng-template>

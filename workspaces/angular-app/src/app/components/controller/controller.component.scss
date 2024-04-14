@@ -1,0 +1,164 @@
+img {
+    height: 30px;
+}
+
+.performance,
+.edit {
+    img {
+        cursor: pointer;
+    }
+}
+
+.mf-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .message {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+
+    .system-actions {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        >img {
+            cursor: pointer;
+            margin-left: 16px;
+        }
+    }
+
+    .app-actions {
+        position: absolute;
+        left: 16px;
+        top: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        select {
+            height: 30px;
+        }
+
+        >div {
+            display: none;
+            min-width: 40px;
+            padding: 0 8px;
+        }
+
+        .encoder-visual {
+            width: 40px;
+            height: 40px;
+        }
+
+        .lighting {
+            &.active {
+                display: flex;
+            }
+        }
+
+        .performance {
+            &.active {
+                display: flex;
+            }
+        }
+
+        .edit {
+            &.active {
+                display: flex;
+            }
+        }
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        color: var(--active);
+
+        .cable {
+            display: none;
+        }
+
+        &.inactive {
+            color: var(--inactive);
+
+            .cable {position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                div {
+                    position: absolute;
+                }
+            }
+        }
+    }
+
+    .sub-title {
+        margin-bottom: 16px;
+        ;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        h3 {
+            margin: 0 8px 0 0;
+        }
+
+        img {
+            display: none;
+
+            &.active {
+                display: block;
+            }
+        }
+    }
+
+    .controller {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+
+        .encoders {
+            z-index: 2;
+            padding: 8px;
+            background-color: var(--light-grey);
+            width: 600px;
+            height: 500px;
+            border: 5px solid grey;
+            border-radius: 20px;
+            display: grid;
+            grid-gap: 4px;
+            grid-template-columns: repeat(4, 1fr);
+
+            &.lighting .button-container {
+                cursor: pointer;
+            }
+
+            app-encoder:nth-child(1) ::ng-deep .button-container {
+                border-top-left-radius: 10px;
+            }
+
+            app-encoder:nth-child(4) ::ng-deep .button-container {
+                border-top-right-radius: 10px;
+            }
+
+            app-encoder:nth-child(13) ::ng-deep .button-container {
+                border-bottom-left-radius: 10px;
+            }
+
+            app-encoder:nth-child(16) ::ng-deep .button-container {
+                border-bottom-right-radius: 10px;
+            }
+        }
+    }
+}

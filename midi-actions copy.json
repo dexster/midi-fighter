@@ -1,0 +1,779 @@
+{
+    "title": "MIDI Fighter Twister",
+    "actions": [
+        {
+            "encoder": [
+                {
+                    "cc": "0",
+                    "knob": "Vocal Solo",
+                    "rotary": "Filter",
+                    "rotarySwitch": "",
+                    "animation": 1
+                },
+                {
+                    "cc": "1",
+                    "knob": "Sync",
+                    "rotary": "Pitch",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "2",
+                    "knob": "Sync",
+                    "rotary": "Pitch",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "3",
+                    "knob": "Vocal Solo",
+                    "rotary": "Filter",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "4",
+                    "knob": "Harmonic Solo",
+                    "rotary": "Hi",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "5",
+                    "knob": "",
+                    "rotary": "Volume",
+                    "rotarySwitch": "Gain"
+                },
+                {
+                    "cc": "6",
+                    "knob": "",
+                    "rotary": "Volume",
+                    "rotarySwitch": "Gain"
+                },
+                {
+                    "cc": "7",
+                    "knob": "Harmonic Solo",
+                    "rotary": "Hi",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "8",
+                    "knob": "Bass Solo",
+                    "rotary": "Mid",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "9",
+                    "knob": "Cue",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "10",
+                    "knob": "Cue",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "11",
+                    "knob": "Bass Solo",
+                    "rotary": "Mid",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "12",
+                    "knob": "Drum Solo",
+                    "rotary": "Lo",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "13",
+                    "knob": "Play",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "14",
+                    "knob": "Play",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "15",
+                    "knob": "Drum Solo",
+                    "rotary": "Lo",
+                    "rotarySwitch": ""
+                }
+            ],
+            "leftSide": [
+                {
+                    "cc": "8",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "0",
+                    "action": ""
+                },
+                {
+                    "cc": "10",
+                    "action": "Shift Toggle",
+                    "isShift": true
+                }
+            ],
+            "rightSide": [
+                {
+                    "cc": "11",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "1",
+                    "action": "Next Bank"
+                },
+                {
+                    "cc": "13",
+                    "action": "Shift Toggle",
+                    "isShift": true
+                }
+            ]
+        },
+        {
+            "encoder": [
+                {
+                    "cc": "16",
+                    "knob": "Library",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "17",
+                    "knob": "Section",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "18",
+                    "knob": "Songs",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "19",
+                    "knob": "",
+                    "rotary": "Scroll",
+                    "rotarySwitch": "Slow Scroll"
+                },
+                {
+                    "cc": "20",
+                    "knob": "",
+                    "rotary": "Jog 1",
+                    "rotarySwitch": "Slow Jog 1"
+                },
+                {
+                    "cc": "21",
+                    "knob": "Load 1",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "22",
+                    "knob": "Load 2",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "23",
+                    "knob": "",
+                    "rotary": "Jog 2",
+                    "rotarySwitch": "Slow Jog 2"
+                },
+                {
+                    "cc": "24",
+                    "knob": "Cue 1",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 1"
+                },
+                {
+                    "cc": "25",
+                    "knob": "Cue 2",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 2"
+                },
+                {
+                    "cc": "26",
+                    "knob": "Cue 1",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 1"
+                },
+                {
+                    "cc": "27",
+                    "knob": "Cue 2",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 2"
+                },
+                {
+                    "cc": "28",
+                    "knob": "Cue 3",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 3"
+                },
+                {
+                    "cc": "29",
+                    "knob": "Cue 4",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 4"
+                },
+                {
+                    "cc": "30",
+                    "knob": "Cue 3",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 3"
+                },
+                {
+                    "cc": "31",
+                    "knob": "Cue 4",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 4"
+                }
+            ],
+            "leftSide": [
+                {
+                    "cc": "1",
+                    "action": "Prev Bank"
+                },
+                {
+                    "cc": "8",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "10",
+                    "action": "Shift Toggle"
+                }
+            ],
+            "rightSide": [
+                {
+                    "cc": "2",
+                    "action": "Next Bank"
+                },
+                {
+                    "cc": "11",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "13",
+                    "action": "Shift Toggle"
+                }
+            ]
+        },
+        {
+            "encoder": [
+                {
+                    "cc": "32",
+                    "knob": "Cue 1",
+                    "rotary": "Vocals",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "33",
+                    "knob": "Cue 1",
+                    "rotary": "Vocals",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "34",
+                    "knob": "Cue 1",
+                    "rotary": "Vocals",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "35",
+                    "knob": "Cue 1",
+                    "rotary": "Vocals",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "36",
+                    "knob": "Cue 2",
+                    "rotary": "Harmonics",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "37",
+                    "knob": "Cue 2",
+                    "rotary": "Harmonics",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "38",
+                    "knob": "Cue 2",
+                    "rotary": "Harmonics",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "39",
+                    "knob": "Cue 2",
+                    "rotary": "Harmonics",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "40",
+                    "knob": "Cue",
+                    "rotary": "Bass",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "41",
+                    "knob": "Cue",
+                    "rotary": "Bass",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "42",
+                    "knob": "Cue",
+                    "rotary": "Bass",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "43",
+                    "knob": "Cue",
+                    "rotary": "Bass",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "44",
+                    "knob": "Play",
+                    "rotary": "Drums",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "45",
+                    "knob": "Play",
+                    "rotary": "Drums",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "46",
+                    "knob": "Play",
+                    "rotary": "Drums",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "47",
+                    "knob": "Play",
+                    "rotary": "Drums",
+                    "rotarySwitch": ""
+                }
+            ],
+            "leftSide": [
+                {
+                    "cc": "2",
+                    "action": "Prev Bank"
+                },
+                {
+                    "cc": "8",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "10",
+                    "action": "Shift Toggle"
+                }
+            ],
+            "rightSide": [
+                {
+                    "cc": "3",
+                    "action": "Next Bank"
+                },
+                {
+                    "cc": "11",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "13",
+                    "action": "Shift Toggle"
+                }
+            ]
+        }
+    ],
+    "shiftActions": [
+        {
+            "encoder": [
+                {
+                    "cc": "0",
+                    "knob": "",
+                    "rotary": "Foo",
+                    "rotarySwitch": "Vocal",
+                    "lighting": "6"
+                },
+                {
+                    "cc": "1",
+                    "knob": "",
+                    "rotary": "Gain",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "2",
+                    "knob": "",
+                    "rotary": "Gain",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "3",
+                    "knob": "",
+                    "rotary": "Filter",
+                    "rotarySwitch": "Vocal"
+                },
+                {
+                    "cc": "4",
+                    "knob": "",
+                    "rotary": "Hi",
+                    "rotarySwitch": "Harmonic"
+                },
+                {
+                    "cc": "5",
+                    "knob": "Sync",
+                    "rotary": "Volume",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "6",
+                    "knob": "Sync",
+                    "rotary": "Volume",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "7",
+                    "knob": "",
+                    "rotary": "Hi",
+                    "rotarySwitch": "Harmonic"
+                },
+                {
+                    "cc": "8",
+                    "knob": "",
+                    "rotary": "Mid",
+                    "rotarySwitch": "Bass"
+                },
+                {
+                    "cc": "9",
+                    "knob": "Cue",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "10",
+                    "knob": "Cue",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "11",
+                    "knob": "",
+                    "rotary": "Mid",
+                    "rotarySwitch": "Bass"
+                },
+                {
+                    "cc": "12",
+                    "knob": "",
+                    "rotary": "Lo",
+                    "rotarySwitch": "Drum"
+                },
+                {
+                    "cc": "13",
+                    "knob": "Play",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "14",
+                    "knob": "Play",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "15",
+                    "knob": "",
+                    "rotary": "Lo",
+                    "rotarySwitch": "Drum"
+                }
+            ],
+            "leftSide": [
+                {
+                    "cc": "8",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "0",
+                    "action": ""
+                },
+                {
+                    "cc": "10",
+                    "action": "Shift Toggle"
+                }
+            ],
+            "rightSide": [
+                {
+                    "cc": "11",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "1",
+                    "action": "Next Bank"
+                },
+                {
+                    "cc": "13",
+                    "action": "Shift Toggle"
+                }
+            ]
+        },
+        {
+            "encoder": [
+                {
+                    "cc": "16",
+                    "knob": "Library",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "17",
+                    "knob": "Section",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "18",
+                    "knob": "Songs",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "19",
+                    "knob": "",
+                    "rotary": "Scroll",
+                    "rotarySwitch": "Slow Scroll"
+                },
+                {
+                    "cc": "20",
+                    "knob": "",
+                    "rotary": "Jog 1",
+                    "rotarySwitch": "Slow Jog 1"
+                },
+                {
+                    "cc": "21",
+                    "knob": "Load 1",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "22",
+                    "knob": "Load 2",
+                    "rotary": "",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "23",
+                    "knob": "",
+                    "rotary": "Jog 2",
+                    "rotarySwitch": "Slow Jog 2"
+                },
+                {
+                    "cc": "24",
+                    "knob": "Cue 1",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 1"
+                },
+                {
+                    "cc": "25",
+                    "knob": "Cue 2",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 2"
+                },
+                {
+                    "cc": "26",
+                    "knob": "Cue 1",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 1"
+                },
+                {
+                    "cc": "27",
+                    "knob": "Cue 2",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 2"
+                },
+                {
+                    "cc": "28",
+                    "knob": "Cue 3",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 3"
+                },
+                {
+                    "cc": "29",
+                    "knob": "Cue 4",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 4"
+                },
+                {
+                    "cc": "30",
+                    "knob": "Cue 3",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 3"
+                },
+                {
+                    "cc": "31",
+                    "knob": "Cue 4",
+                    "rotary": "",
+                    "rotarySwitch": "Clear Cue 4"
+                }
+            ],
+            "leftSide": [
+                {
+                    "cc": "1",
+                    "action": "Prev Bank"
+                },
+                {
+                    "cc": "8",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "10",
+                    "action": "Shift Toggle"
+                }
+            ],
+            "rightSide": [
+                {
+                    "cc": "2",
+                    "action": "Next Bank"
+                },
+                {
+                    "cc": "11",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "13",
+                    "action": "Shift Toggle"
+                }
+            ]
+        },
+        {
+            "encoder": [
+                {
+                    "cc": "32",
+                    "knob": "Cue 1",
+                    "rotary": "Vocals",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "33",
+                    "knob": "Cue 1",
+                    "rotary": "Vocals",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "34",
+                    "knob": "Cue 1",
+                    "rotary": "Vocals",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "35",
+                    "knob": "Cue 1",
+                    "rotary": "Vocals",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "36",
+                    "knob": "Cue 2",
+                    "rotary": "Harmonics",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "37",
+                    "knob": "Cue 2",
+                    "rotary": "Harmonics",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "38",
+                    "knob": "Cue 2",
+                    "rotary": "Harmonics",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "39",
+                    "knob": "Cue 2",
+                    "rotary": "Harmonics",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "40",
+                    "knob": "Cue",
+                    "rotary": "Bass",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "41",
+                    "knob": "Cue",
+                    "rotary": "Bass",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "42",
+                    "knob": "Cue",
+                    "rotary": "Bass",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "43",
+                    "knob": "Cue",
+                    "rotary": "Bass",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "44",
+                    "knob": "Play",
+                    "rotary": "Drums",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "45",
+                    "knob": "Play",
+                    "rotary": "Drums",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "46",
+                    "knob": "Play",
+                    "rotary": "Drums",
+                    "rotarySwitch": ""
+                },
+                {
+                    "cc": "47",
+                    "knob": "Play",
+                    "rotary": "Drums",
+                    "rotarySwitch": ""
+                }
+            ],
+            "leftSide": [
+                {
+                    "cc": "2",
+                    "action": "Prev Bank"
+                },
+                {
+                    "cc": "8",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "10",
+                    "action": "Shift Toggle"
+                }
+            ],
+            "rightSide": [
+                {
+                    "cc": "3",
+                    "action": "Next Bank"
+                },
+                {
+                    "cc": "11",
+                    "action": "Shift Hold"
+                },
+                {
+                    "cc": "13",
+                    "action": "Shift Toggle"
+                }
+            ]
+        }
+    ]
+}
