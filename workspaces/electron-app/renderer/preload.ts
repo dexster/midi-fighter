@@ -1,8 +1,7 @@
 // To secure user platform when running renderer process stuff,
 // Node.JS and Electron remote APIs are only available in this script
 
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
-import { WindowApiConst } from 'shared-lib';
+import { contextBridge, ipcRenderer } from 'electron';
 
 // So we expose protected methods that allow the renderer process
 // to use the ipcRenderer without exposing the entire object
@@ -14,20 +13,7 @@ contextBridge.exposeInMainWorld('api', {
 	openFile: (filePath: string) => ipcRenderer.invoke('dialog:openFile', filePath),
     saveFile: (filePath: string) => ipcRenderer.invoke('dialog:saveFile', filePath),
     readData: (filePath: string) => ipcRenderer.invoke('readData', filePath),
-    writeData: (actions: string, filePath: string) => ipcRenderer.send('writeData', actions, filePath),
-	send: <In>(channel: string, input: In) => {
-		if (WindowApiConst.SENDING_SAFE_CHANNELS.includes(channel)) {
-			ipcRenderer.send(channel, input);
-		}
-	},
-	receive: <Out>(channel: string, callback: (output: Out) => void) => {
-		// Deliberately strip event as it includes `sender`
-		ipcRenderer.on(channel, (_event: IpcRendererEvent, ...parameters: any[]) => {
-			console.log(`Received from main process channel [${channel}]`, parameters[0]);
-			callback(parameters[0])
-		}
-		);
-	},
+    writeData: (actions: string, filePath: string) => ipcRenderer.send('writeData', actions, filePath)
 });
 
 console.log('The preload script has been injected successfully.');

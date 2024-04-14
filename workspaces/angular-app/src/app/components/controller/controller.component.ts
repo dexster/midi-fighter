@@ -43,7 +43,6 @@ export class ControllerComponent {
     this.midiService.message$.pipe(
       filter((message): message is MidiEvent => !!message))
       .subscribe((message) => {
-        // console.log('received message: ', message);
         this.actionReceivedMessage(message);
       });
   }

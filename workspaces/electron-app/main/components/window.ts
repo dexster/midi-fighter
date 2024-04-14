@@ -2,9 +2,6 @@ import * as remoteMain from '@electron/remote/main';
 import { app, BrowserWindow, ipcMain, nativeImage, dialog } from 'electron';
 import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
-
-import { AbstractService } from '../services/abstract-service';
-import { MultiplesService } from '../services/multiples-service';
 import { Logger } from '../utils/logger';
 
 declare const global: Global;
@@ -16,7 +13,7 @@ export class Window {
 	constructor() {
 		this.createWindow();
 		this.loadRenderer();
-		this.registerService<number, number[]>(new MultiplesService());
+		this.registerService();
 	}
 
 	private createWindow(): void {
@@ -105,7 +102,7 @@ export class Window {
 		if (!canceled) {
 		  return filePaths[0];
 		}
-		return 'FOOOOOOO';
+		return '';
 	  }
 
 	  async handleFileSave(e: any, defaultPath: string): Promise<string> {
@@ -145,7 +142,6 @@ export class Window {
 		  return JSON.parse(data);
 		} catch (err) {
 		  return null;
-		//   return {title: '', actions: [{},{},{},{}], shiftActions: [{},{},{},{}]};
 		}
 	  }
 	  
@@ -161,29 +157,11 @@ export class Window {
 		}
 	  }
 
-	private registerService<In, Out>(service: AbstractService<In, Out>) {
+	private registerService() {
 		ipcMain.handle('dialog:openFile', this.handleFileOpen);
 		ipcMain.handle('dialog:saveFile', this.handleFileSave);
 		ipcMain.handle('readData', this.readData);
 		ipcMain.on('writeData', this.writeData);
-		ipcMain.on(
-			service.receptionChannel(),
-			async (event: Electron.IpcMainEvent, ...parameters: any[]) => {
-				// Handling input
-				const input = parameters[0];
-				Logger.debug(`[${service.receptionChannel()}]  =====> `, input);
-				const output: Out = service.process(input);
-
-				// Handling output
-				if (service.sendingChannel()) {
-					Logger.debug(`[${service.sendingChannel()}] =====> `, output);
-					this._electronWindow.webContents.send(
-						service.sendingChannel(),
-						output
-					);
-				}
-			}
-		);
 	}
 
 	public get electronWindow(): BrowserWindow | undefined {

@@ -1,10 +1,10 @@
 {
-	"name": "electron-angular-app",
-	"productName": "Electron Angular App",
-	"version": "5.0.0",
-	"description": "An Electron and Angular Quick-starter",
-	"repository": "https://github.com/sourcygen/electron-angular-quick-start.git",
-	"author": "Sourcygen",
+	"name": "midifighter-rematch",
+	"productName": "MidiFighter Rematch",
+	"version": "1.0.0",
+	"description": "MidiFighter utils",
+	"repository": "https://github.com/dexster/midi-fighter",
+	"author": "dex",
 	"license": "MIT",
 	"main": ".webpack/main",
 	"keywords": [
@@ -62,8 +62,8 @@
 	"config": {
 		"forge": {
 			"packagerConfig": {
-				"name": "Electron Angular App",
-				"executableName": "electron-angular-app",
+				"name": "MidiFighter Rematch",
+				"executableName": "midifighter-rematch",
 				"icon": "./workspaces/electron-app/main/assets/icons/icon"
 			},
 			"makers": [
