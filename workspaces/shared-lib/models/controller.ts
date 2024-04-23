@@ -5,12 +5,14 @@ export interface ButtonAction {
   isShift?: boolean;
 }
 
+export type EncoderType = "CC" | "3FH/41H"
+
 export interface EncoderAction extends ButtonAction {
   cc: number;
   encoder?: string;
   encoderShift?: string;
-  encoderType?: 'CC' | '3FH/41H';
-  animation?: number;
+  encoderType: EncoderType;
+  animation: number;
   min: number;
   max: number;
 }
@@ -26,3 +28,5 @@ export interface ControllerData {
   bank: Actions[];
   shiftBank: Actions[];
 }
+
+export type MessageResponse = {response: number, checkboxChecked: boolean};

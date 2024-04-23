@@ -1,4 +1,4 @@
-export type Mode = 'performance' | 'edit' | 'lighting' | 'shift' | 'midi';
+export type Mode = 'performance' | 'edit' | 'lighting' | 'shift' | 'midi' | 'switchType';
 
 export type Side = 'left' | 'right';
 
@@ -14,3 +14,4 @@ export interface MidiEvent extends MidiMessage {
     actionType: Actiontype;
     message: any;
 }
+

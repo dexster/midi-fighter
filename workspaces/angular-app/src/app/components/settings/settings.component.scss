@@ -10,25 +10,32 @@ img {
     }
 }
 
-.system-actions {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: end;
+// .system-actions {
+//     position: absolute;
+//     top: 16px;
+//     right: 16px;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: flex-end;
 
-    img {
-        cursor: pointer;
-    }
+//     img {
+//         cursor: pointer;
+//     }
 
     .midi-out {
+        position: absolute;
+        top: 16px;
+        right: 16px;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        // display: flex;
+        // flex-direction: column;
         font-size: 0.85rem;
     }
-}
+// }
 
 .app-actions {
     position: absolute;
@@ -52,10 +59,10 @@ img {
         padding: 0 8px;
     }
 
-    .encoder-visual {
-        width: 40px;
-        height: 40px;
-    }
+    // .encoder-visual {
+    //     width: 40px;
+    //     height: 40px;
+    // }
 
     // .lighting {
     .active {

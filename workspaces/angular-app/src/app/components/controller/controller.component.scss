@@ -83,6 +83,10 @@ img {
         align-items: center;
         color: var(--active);
 
+        h2 {
+            margin-bottom: 8px;
+        }
+
         .cable {
             display: none;
         }
@@ -100,10 +104,15 @@ img {
                 }
             }
         }
+
+        input {
+            width: 180px
+        }
     }
 
     .sub-title {
-        margin-bottom: 16px;
+        margin-bottom: 8px;
+        height: 40px;
         ;
         display: flex;
         align-items: center;

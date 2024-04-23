@@ -1,8 +1,13 @@
-import { ControllerData } from "../models/controller";
+import { ControllerData, MessageResponse } from "../models/controller";
 
 export interface WindowApi {
-	openFile(filePath: string): string; 
-    saveFile(filePath: string): string;
+	openFileDialog(callback: any): string; 
+    saveFileDialog(filePath: string): string;
+    showMessageBoxDialog(options: any): MessageResponse;
     readData(filePath?: string): ControllerData;
-    writeData(actions: string, filePath: string): void;
+    writeData(actions: ControllerData): void;
+    onFile(callback: (fileAction: string) => void): void;
+    onEdit(callback: (editAction: string) => void): void;
+    onTools(callback: (toolsAction: string) => void): void;
+    updateMenu(actions: any): void;
 }

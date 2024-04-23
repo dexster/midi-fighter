@@ -10,10 +10,15 @@ contextBridge.exposeInMainWorld('api', {
 	node: () => process.versions.node,
 	chrome: () => process.versions.chrome,
 	electron: () => process.versions.electron,
-	openFile: (filePath: string) => ipcRenderer.invoke('dialog:openFile', filePath),
-    saveFile: (filePath: string) => ipcRenderer.invoke('dialog:saveFile', filePath),
-    readData: (filePath: string) => ipcRenderer.invoke('readData', filePath),
-    writeData: (actions: string, filePath: string) => ipcRenderer.send('writeData', actions, filePath)
+	openFileDialog: (filePath: string) => ipcRenderer.invoke('dialog:openFile', filePath),
+    saveFileDialog: (filePath: string) => ipcRenderer.invoke('dialog:saveFile', filePath),
+    showMessageBoxDialog: (filePath: string) => ipcRenderer.invoke('dialog:showMessageBox', filePath),
+    readData: (filePath: string) => ipcRenderer.invoke('readData'),
+    writeData: (actions: string, filePath: string) => ipcRenderer.invoke('writeData', actions),
+	onFile: (callback: any) => ipcRenderer.on('file', (_event, value) => callback(value)),
+	onEdit: (callback: any) => ipcRenderer.on('edit', (_event, value) => callback(value)),
+	onTools: (callback: any) => ipcRenderer.on('tools', (_event, value) => callback(value)),
+	updateMenu: (actions: string) => ipcRenderer.invoke('updateMenu', actions)
 });
 
 console.log('The preload script has been injected successfully.');

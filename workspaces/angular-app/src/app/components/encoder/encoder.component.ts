@@ -18,11 +18,13 @@ import { MidiService } from 'src/app/services/midi';
 export class EncoderComponent {
 
   mode = input<Mode>();
-  encoder = input<EncoderAction>();
+  encoder = input.required<EncoderAction>();
   rgbActive = input<boolean>();
   indicatorActive = input<boolean>();
   activeBank = input<number>(0);
   shiftActive = input<boolean>();
+  index = input<number>(0);
+  position = computed(() => this.index() + (this.activeBank()! * 16));
 
   selectedEncoders = model<EncoderAction[]>([]);
 
@@ -49,49 +51,66 @@ export class EncoderComponent {
     effect(() => {
       if (this.mode() === 'performance') {
         this.selected = false;
-      }
+      } 
     });
+
     // if (this.encoder()!.animation !== 0) {
     //   this.saved.set(true);
     // }
   }
 
+  setState() {
+    // first set selected if encoder is in selectedEncoders
+    // if not selected then check if encoder.isShift is true and set selected to true
+    // shift and normal radio buttons can be removed. Either the encoder is selected or it is not when we save
+    this.selected = this.selectedEncoders().some(encoder => encoder.position === this.position());
+  }
+
+  ngOnInit() {
+    this.setState();
+  }
+
   timeoutId: any;
 
   showLighting(message: MidiEvent) {
-    switch (message.actionType) {
-      case 'CC switch':
-        this.switchActive.set(message.velocity > 0 && this.mode() === 'performance');
-        break;
-      case 'CC rotary':
-        if (this.mode() === 'performance') {
-          if (this.encoder()!.encoderType === 'CC') {
-            let highlightedLEDs = Math.ceil(message.velocity / (127 / 11));
-            let dashArray = '30';
-            for (let i = 1; i <= highlightedLEDs; i++) {
-              dashArray += ` 16.9 0`;
-            }
-            dashArray += ' 210';
-            this.dashArray.set(dashArray);
-          }
-          else {
-            clearTimeout(this.timeoutId);
-            this.endlessActive.set(true);
-            this.dashArray.set(message.velocity === 63
-              ? '30 84 0 16.9 0 120'
-              : '30 101 0 16.9 0 100');
-          }
-          this.timeoutId = setTimeout(() => {
-            this.endlessActive.set(false);
-          }, 100);
-
+    if (this.mode() === 'performance') {
+      switch (message.actionType) {
+        case 'CC switch':
+          this.switchActive.set(message.velocity > 0 && this.mode() === 'performance');
           break;
-        }
-    }
+        case 'CC rotary':
+          if (this.mode() === 'performance') {
+            if (this.encoder()!.encoderType === 'CC') {
+              let highlightedLEDs = Math.ceil(message.velocity / (127 / 11));
+              let dashArray = '30';
+              for (let i = 1; i <= highlightedLEDs; i++) {
+                dashArray += ` 16.9 0`;
+              }
+              dashArray += ' 210';
+              this.dashArray.set(dashArray);
+            }
+            else {
+              clearTimeout(this.timeoutId);
+              this.endlessActive.set(true);
+              this.dashArray.set(message.velocity === 63
+                ? '30 84 0 16.9 0 120'
+                : '30 101 0 16.9 0 100');
+            }
+            this.timeoutId = setTimeout(() => {
+              this.endlessActive.set(false);
+            }, 100);
+
+            break;
+          }
+      }
+    } 
   }
 
   setSelected() {
+    console.log('setSelected: ', this.encoder()!.cc, this.selectedEncoders().map(encoder => encoder.cc));
     if (this.selected) {
+      // selectedencoders must keep the list of clicked unselected encoders as well so we can set them to normal
+      // just set the isShift to false
       this.selectedEncoders.set(this.selectedEncoders().filter(encoder => encoder !== this.encoder()!));
     } else {
       this.selectedEncoders.set([...this.selectedEncoders(), this.encoder()!]);

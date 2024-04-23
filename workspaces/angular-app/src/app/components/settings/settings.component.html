@@ -1,13 +1,14 @@
 <div class="app-actions">
-    <div class="performance mode" [ngClass]="{ active: mode() === 'performance' }">
+    <!-- <div class="performance mode" [ngClass]="{ active: mode() === 'performance' }">
         <img id="open" src="./assets/folder.svg" (click)="openFile()" />
-        <img id="edit" src="./assets/edit.svg" (click)="setMode('edit')" />
+        <img id="edit" src="./assets/edit.svg" (click)="mode.set('edit')" />
         <img id="lighting" src="./assets/bulb.svg" (click)="mode.set('lighting')" />
         <img id="shift" src="./assets/shift.svg" (click)="mode.set('shift')" />
         <img id="midi" src="./assets/midi-port.svg" (click)="mode.set('midi')" />
-    </div>
+    </div> -->
     <div class="lighting mode" [ngClass]="{ active: mode() === 'lighting' }">
         <select class="animation-type" [(ngModel)]="animationType" (change)="setAnimationValueOptions($event)">
+            <option [value]="-1">None</option>
             @for (item of animationService.animationTypes; track item.name; let idx = $index) {
             <option [value]="idx">{{item.name}}</option>
             }
@@ -26,6 +27,14 @@
             }
         </select>
     </div>
+
+    <div class="shift mode" [ngClass]="{ active: mode() === 'switchType' }">
+        <select class="switch-value" (change)="showLighting()" [(ngModel)]="encoderType">
+            <option value="CC">CC</option>
+            <option value="3FH/41H">ENC 3FH/41H</option>
+        </select>
+    </div>
+
     <div class="shift mode" [ngClass]="{ active: mode() === 'shift' }">
         <div>
             <input type="radio" id="shift-true" selected name="shift" [value]="true" [(ngModel)]="isShift" />
@@ -39,31 +48,32 @@
 
     <div class="edit mode" [ngClass]="{ active: mode() !== 'performance' }">
         <div>
-            <img id="cancel" class="cancel" src="./assets/cancel.svg" (click)="cancelEdit()" />
+            <img id="cancel" class="cancel" src="./assets/cancel.svg" (click)="cancelEdit()" alt="cancel" />
         </div>
-        <div>
+        <!-- <div>
             <img id="update" class="save" src="./assets/save.svg" (click)="saveValues()" />
-        </div>
+        </div> -->
     </div>
 </div>
-<div class="system-actions">
-    <div>
+<!-- <div class="system-actions"> -->
+<!-- <div>
         <img class="refresh" src="./assets/refresh.svg" (click)="refresh()" />
         <img class="info" src="./assets/info.svg" (click)="toggleMessageDisplay()" />
-    </div>
-    @if (midiService.selectedOutputDevice()) {
-    <div class="midi-out">
-        <span>
+    </div> -->
+@if (midiService.selectedOutputDevice()) {
+<div class="midi-out">
+    <span>
         Midi Out</span>
-        <select class="device-out" [(ngModel)]="midiService.selectedOutputDevice">
-            <option [value]="0">None</option>
-            @for (device of midiService.midiDevices; track device.outputId) {
-            <option [value]="device">{{device.name}}</option>
-            }
-        </select>
-        <div class="indicator" [ngStyle]="{display: this.showMessage() ? 'block' : 'none'}">
-            ch: {{midiService.midiOutMessage()?.channel}} cc: {{midiService.midiOutMessage()?.cc}} velocity: {{midiService.midiOutMessage()?.velocity}}
-        </div>
+    <select class="device-out" [(ngModel)]="midiService.selectedOutputDevice">
+        <option [value]="0">None</option>
+        @for (device of midiService.midiDevices; track device.outputId) {
+        <option [value]="device">{{device.name}}</option>
+        }
+    </select>
+    <div class="indicator" [ngStyle]="{display: this.showMessage() ? 'block' : 'none'}">
+        ch: {{midiService.midiOutMessage()?.channel}} cc: {{midiService.midiOutMessage()?.cc}} velocity:
+        {{midiService.midiOutMessage()?.velocity}}
     </div>
-    }
 </div>
+}
+<!-- </div> -->
