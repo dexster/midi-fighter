@@ -22,7 +22,6 @@ export class EncoderComponent {
   rgbActive = input<boolean>();
   indicatorActive = input<boolean>();
   activeBank = input<number>(0);
-  shiftActive = input<boolean>();
   index = input<number>(0);
   position = computed(() => this.index() + (this.activeBank()! * 16));
 

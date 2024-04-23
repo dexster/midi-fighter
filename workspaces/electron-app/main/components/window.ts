@@ -252,12 +252,12 @@ export class Window {
 
 	handleShowMessageBoxDialog = async (e: any, options: any) => {
 		if (options.icon) {
-		options = {...options, icon: this.loadIcon(options.icon)}
+			options = { ...options, icon: this.loadIcon(options.icon) }
 		}
 		console.log('handleShowMessage');
 		return await dialog.showMessageBox(options);
 	}
-	
+
 	async handleFileOpenDialog(e: any, defaultPath: string): Promise<string> {
 		console.log('handleFileOpenDialog', defaultPath)
 		const { canceled, filePaths } = await dialog.showOpenDialog({
@@ -333,6 +333,7 @@ export class Window {
 					const cfg = {
 						activePath: this.currentFilePath
 					}
+					console.log('readData - setting config', cfg)
 					await this.setConfig(cfg);
 				}
 			} catch (err) {
@@ -343,8 +344,13 @@ export class Window {
 		}
 
 		console.log('readData - reading file from', this.currentFilePath)
-		const data = await fs.readFile(this.currentFilePath, { encoding: 'utf8' });
-		return JSON.parse(data);
+		try {
+			const data = await fs.readFile(this.currentFilePath, { encoding: 'utf8' });
+			return JSON.parse(data);
+		} catch (error) {
+			console.error(error);
+			return;
+		}
 	}
 
 	writeData = async (e: any, controllerData: ControllerData) => {

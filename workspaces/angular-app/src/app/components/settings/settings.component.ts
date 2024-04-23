@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, NgZone, computed, effect, inject, input, model, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, effect, inject, input, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonAction, ControllerData, EncoderAction, EncoderType, MessageResponse } from 'shared-lib/models/controller';
 import { Mode, Side } from 'src/app/models/controller';
@@ -26,8 +26,8 @@ export class SettingsComponent {
   mode = model<Mode>();
   buttons = input<ButtonAction[]>();
   side = input<Side>();
-  shiftActive = model<boolean>();
-  actionType = computed(() => this.shiftActive() ? 'shiftBank' : 'bank');
+  // shiftActive = model<boolean>();
+  // actionType = computed(() => this.shiftActive() ? 'shiftBank' : 'bank');
   activeBank = input.required<number>();
   controllerDataOriginal: ControllerData;
   showMessage = signal(false);
@@ -49,7 +49,7 @@ export class SettingsComponent {
   constructor() {
 
     window.api.onFile(fileAction => {
-      console.log('fileAction: ', fileAction);
+      console.log('fileAction:', fileAction);
       this.ngZone.run(() => {
         switch (fileAction) {
           case ('open'):
@@ -66,7 +66,7 @@ export class SettingsComponent {
     });
 
     window.api.onEdit(editAction => {
-      console.log('editAction: ', editAction);
+      console.log('editAction:', editAction);
       this.ngZone.run(() => {
         switch (editAction) {
           case ('label'):
@@ -93,7 +93,7 @@ export class SettingsComponent {
     });
 
     window.api.onTools(toolsAction => {
-      console.log('toolsAction: ', toolsAction);
+      console.log('toolsAction:', toolsAction);
       this.ngZone.run(() => {
         switch (toolsAction) {
           case ('refresh'):
@@ -110,29 +110,29 @@ export class SettingsComponent {
     effect(() => {
       if (this.mode() !== 'performance') {
         this.controllerDataOriginal = JSON.parse(JSON.stringify(this.controllerConfigService.controllerData()));
-        console.log('controllerDataOriginal: ', this.controllerDataOriginal);
+        console.log('controllerDataOriginal:', this.controllerDataOriginal);
       }
     })
   }
 
   async openFile() {
     const filePath = await window.api.openFileDialog('midi-actions.json');
-    console.log('openFile filePath: ', filePath);
+    console.log('openFile filePath:', filePath);
     const data = await window.api.readData(filePath);
-    console.log('openFile data: ', data);
+    console.log('openFile data:', data);
     this.ngZone.run(async () => {
       this.controllerConfigService.setConfig(data);
     });
   }
 
   async saveFile(overwrite: boolean) {
-    if (!overwrite) {
+    if (overwrite) {
+      this.saveValues();
+    } else {
       const filePath = await window.api.saveFileDialog('midi-actions.json')
       if (filePath) { // only used to check if cancel was clicked
         this.saveValues();
       }
-    } else {
-      this.saveValues();
     }
   }
 
@@ -155,7 +155,7 @@ export class SettingsComponent {
         defaultId: 0,
         icon: 'icons/hide-icon.png'
       });
-      console.log('messageResponse: ', messageResponse);
+      console.log('messageResponse:', messageResponse);
       if (messageResponse.response !== ConfirmOption['Continue editing']) {
         if (messageResponse.response === ConfirmOption['Save changes']) {
           console.log('saveValues')
@@ -202,46 +202,46 @@ export class SettingsComponent {
   }
 
   modifyJsonFormat() {
-    (['bank', 'shiftBank'] as const).forEach(bank => {
+    for (const bank of (['bank', 'shiftBank'] as const)) {
       for (let i = 0; i < 4; i++) {
-        this.controllerConfigService.controllerData()![bank][i].encoder.forEach(encoder => {
+        for (const encoder of this.controllerConfigService.controllerData()![bank][i].encoder) {
           encoder.animation = -1;
           // encoder.cc = parseInt(''+encoder.cc);
           // encoder.position = parseInt(''+encoder.cc);
           // encoder.encoderType = 'CC';
           // encoder.min = 0;
           // encoder.max = 127;
-        });
+        }
       }
-    });
+    }
   }
 
   async saveValues() {
     // this.modifyJsonFormat();
-    let encoders = this.controllerConfigService.controllerData()!.bank.flatMap(bank => bank.encoder);
+    const encoders = this.controllerConfigService.controllerData()!.bank.flatMap(bank => bank.encoder);
     if (this.mode() === 'lighting') {
-      this.selectedEncoders().forEach(encoder => {
-        encoders.find(e => e.position === encoder.position)!.animation = +this.animationValue;
-      });
+      for (const encoder of this.selectedEncoders()) {
+        encoders.find(enc => enc.position === encoder.position)!.animation = +this.animationValue;
+      }
     }
 
     if (this.mode() === 'shift') {
-      this.selectedEncoders().forEach(encoder => {
-        const found = encoders.find(e => e.position === encoder.position);
+      for (const encoder of this.selectedEncoders()) {
+        const found = encoders.find(enc => enc.position === encoder.position);
         if (found) { found.isShift = this.isShift; }
-      });
-      (['leftSide', 'rightSide'] as const).forEach(side => {
-        this.selectedButtons().forEach(button => {
-          const found = this.controllerConfigService.controllerData()!.bank[this.activeBank()][side].find(e => e.cc === button.cc);
+      }
+      for (const side of (['leftSide', 'rightSide'] as const)) {
+        for (const button of this.selectedButtons()) {
+          const found = this.controllerConfigService.controllerData()!.bank[this.activeBank()][side].find(enc => enc.cc === button.cc);
           if (found) { found.isShift = this.isShift; }
-        })
-      });
+        }
+      }
     }
 
     if (this.mode() === 'switchType') {
-      this.selectedEncoders().forEach(encoder => {
-        encoders.find(e => e.position === encoder.position)!.encoderType = this.encoderType;
-      });
+      for (const encoder of this.selectedEncoders()) {
+        encoders.find(enc => enc.position === encoder.position)!.encoderType = this.encoderType;
+      }
     }
 
     this.controllerDataOriginal = JSON.parse(JSON.stringify(this.controllerConfigService.controllerData()));

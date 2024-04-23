@@ -1,18 +1,15 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, Signal, WritableSignal, computed, inject, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, Signal, computed, inject, model, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { filter } from 'rxjs';
-import { ControllerData, EncoderAction, ButtonAction } from 'shared-lib/models/controller';
-import { MidiDevice, MidiService } from '../../services/midi';
-import { ControllerConfigService } from '../../services/controller-config.service';
+import { ControllerData, EncoderAction } from 'shared-lib/models/controller';
 import { MidiEvent, Mode } from '../../models/controller';
+import { ControllerConfigService } from '../../services/controller-config.service';
+import { MidiService } from '../../services/midi';
 import { EncoderComponent } from '../encoder/encoder.component';
 import { SettingsComponent } from "../settings/settings.component";
 import { SideComponent } from "../side/side.component";
-import { ipcMain } from 'electron';
-import { encode } from 'punycode';
-import { animation } from '@angular/animations';
 
 @Component({
   selector: 'app-controller',
@@ -29,26 +26,19 @@ export class ControllerComponent {
   // shiftButtons: number[] = [];
   shiftActive = model(false);
   actionType = computed(() => this.shiftActive() ? 'shiftBank' : 'bank');
-  // controllerData: WritableSignal<ControllerData | undefined> = signal(undefined);;
   showMessage = false;
   rgbActive = model(false);
   indicatorActive = model(false);
   animationType = 0;
   message: Signal<MidiEvent | null | undefined>;
-  selectedEncoders: WritableSignal<EncoderAction[]> = signal([]);
-  selectedButtons: WritableSignal<ButtonAction[]> = signal([]);
-
-  // ccConfig: Map<number, EncoderAction>  = new Map();
+  selectedEncoders = signal([]);
+  selectedButtons  = signal([]);
 
   midiService = inject(MidiService);
   controllerConfigService = inject(ControllerConfigService);
   ngZone = inject(NgZone);
 
-  selected: any;
-
-
   constructor() {
-    this.selected = computed(() => this.selectedEncoders().map((e: any) => e.position));
     this.message = toSignal(this.midiService.message$)
     this.midiService.message$.pipe(
       filter((message): message is MidiEvent => !!message))
@@ -59,7 +49,7 @@ export class ControllerComponent {
 
   async ngOnInit() {
     let data = await window.api.readData();
-    console.log('ngOnInit data: ', data);
+    console.log('ngOnInit data:', data);
     if (!data) {
       console.log('no data found, creating template');
       data = this.createTemplate();

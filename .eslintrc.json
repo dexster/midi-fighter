@@ -36,6 +36,8 @@
 				"ignoreRestArgs": true
 			}
 		],
-		"unicorn/prefer-module": "off"
+		"unicorn/prefer-module": "off",
+		"unicorn/switch-case-braces": "off",
+		"unicorn/prevent-abbreviations": "off"
 	}
 }
