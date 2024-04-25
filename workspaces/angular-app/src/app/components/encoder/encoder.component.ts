@@ -1,11 +1,12 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal, computed, effect, inject, input, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { filter } from 'rxjs';
-import { EncoderAction } from 'shared-lib/models/controller';
+import { EncoderAction, EncoderType } from 'shared-lib/models/controller';
 import { MidiEvent, Mode } from 'src/app/models/controller';
 import { AnimationService } from 'src/app/services/animation';
 import { MidiService } from 'src/app/services/midi';
+import { StateService } from 'src/app/services/state';
 
 @Component({
   selector: 'app-encoder',
@@ -17,7 +18,7 @@ import { MidiService } from 'src/app/services/midi';
 })
 export class EncoderComponent {
 
-  mode = input<Mode>();
+  mode = input.required<Mode>();
   encoder = input.required<EncoderAction>();
   rgbActive = input<boolean>();
   indicatorActive = input<boolean>();
@@ -31,12 +32,13 @@ export class EncoderComponent {
   endlessActive = signal(false);
   anmation = signal(0);
 
-  selected = false;
-
   midiService = inject(MidiService);
   animationService = inject(AnimationService);
+  stateService = inject(StateService);
 
   dashArray = signal('30 210');
+
+  selected$: Signal<boolean> = signal<boolean>(false);
 
   constructor() {
     this.midiService.message$.pipe(
@@ -47,26 +49,24 @@ export class EncoderComponent {
         }
       });
 
-    effect(() => {
-      if (this.mode() === 'performance') {
-        this.selected = false;
-      } 
-    });
-
-    // if (this.encoder()!.animation !== 0) {
-    //   this.saved.set(true);
-    // }
+    this.selected$ = computed(() => {
+      if (this.mode() === 'shift') {
+        const found = this.selectedEncoders().find(encoder => encoder.position === this.position());
+        if (found) {
+          return !!found.isShift;
+        }
+        return !!found;
+      }
+      return false;
+    })
   }
 
   setState() {
-    // first set selected if encoder is in selectedEncoders
-    // if not selected then check if encoder.isShift is true and set selected to true
-    // shift and normal radio buttons can be removed. Either the encoder is selected or it is not when we save
-    this.selected = this.selectedEncoders().some(encoder => encoder.position === this.position());
-  }
-
-  ngOnInit() {
-    this.setState();
+    const found = this.selectedEncoders().find(encoder => encoder.position === this.position());
+    if (found) {
+      return !!found.isShift;
+    }
+    return !!found;
   }
 
   timeoutId: any;
@@ -102,21 +102,26 @@ export class EncoderComponent {
             break;
           }
       }
-    } 
+    }
   }
 
   setSelected() {
-    console.log('setSelected: ', this.encoder()!.cc, this.selectedEncoders().map(encoder => encoder.cc));
-    if (this.selected) {
-      // selectedencoders must keep the list of clicked unselected encoders as well so we can set them to normal
-      // just set the isShift to false
-      this.selectedEncoders.set(this.selectedEncoders().filter(encoder => encoder !== this.encoder()!));
-    } else {
-      this.selectedEncoders.set([...this.selectedEncoders(), this.encoder()!]);
+    if (['shift', 'switchType', 'lighting'].includes(this.mode())) {
+      if (this.mode() === 'shift') {
+        this.encoder()!.isShift = !this.selected$();
+        const selectedEncs = this.selectedEncoders().filter(encoder => encoder.position !== this.encoder().position);
+        if (!this.selected$()) {
+          this.selectedEncoders.set([...selectedEncs, this.encoder()!]);
+        } else {
+          this.selectedEncoders.set(selectedEncs);
+        }
+      } else if (this.mode() === 'switchType') {
+        this.encoder()!.encoderType = this.stateService.selectedValue() as EncoderType;
+      } else if (this.mode() === 'lighting') {
+        this.encoder()!.animation = +this.stateService.selectedValue();
+      }
     }
-    this.selected = !this.selected;
   }
-
   // modeChanged() {
   //   const savedEncoders = this.controllerData()![this.actionType()][this.activeBank()!].encoder
   //     .filter(encoder => encoder.animation === +this.animationValue)

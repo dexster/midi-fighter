@@ -10,7 +10,7 @@
 
 <ng-template #tmplEncoder>
     <div class="button-container cc{{ activeBank() * 16 + +encoder()!.cc }}">
-        <div class="button" [ngClass]="{'selected': selected && ['lighting', 'shift', 'switchType'].includes(mode()!)}">
+        <div class="button" [ngClass]="{'selected': selected$() && ['lighting', 'shift', 'switchType'].includes(mode()!)}">
             <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
                 <circle class="background" r="37" stroke-width="15" cx="50%" cy="50%" />
 
@@ -56,6 +56,9 @@
                 <input type="number" class="midi min" [(ngModel)]="encoder()!.min" />
                 <input type="number" class="midi max" [(ngModel)]="encoder()!.max" />
             </div>
+            }
+            @case ('switchType') {
+            <div>{{encoder()!.encoderType}}</div>
             }
             }
         </div>

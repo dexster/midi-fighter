@@ -6,6 +6,7 @@ import { Mode, Side } from 'src/app/models/controller';
 import { AnimationService } from 'src/app/services/animation';
 import { ControllerConfigService } from 'src/app/services/controller-config.service';
 import { MidiService } from 'src/app/services/midi';
+import { StateService } from 'src/app/services/state';
 
 export enum ConfirmOption {
   'Continue editing',
@@ -32,18 +33,18 @@ export class SettingsComponent {
   controllerDataOriginal: ControllerData;
   showMessage = signal(false);
   animationType = 0;
-  animationValue = -1;
+  // animationValue = -1;
   encoderType: EncoderType = 'CC';
   rgbActive = model<boolean>();
   indicatorActive = model<boolean>();
   showMessageInfo = signal<boolean>(false);
   selectedEncoders = input<EncoderAction[]>([]);
-  selectedButtons = input<ButtonAction[]>([]);
   isShift = false;
 
   midiService = inject(MidiService);
   animationService = inject(AnimationService);
   controllerConfigService = inject(ControllerConfigService);
+  stateService = inject(StateService);
   ngZone = inject(NgZone);
 
   constructor() {
@@ -111,8 +112,11 @@ export class SettingsComponent {
       if (this.mode() !== 'performance') {
         this.controllerDataOriginal = JSON.parse(JSON.stringify(this.controllerConfigService.controllerData()));
         console.log('controllerDataOriginal:', this.controllerDataOriginal);
+        if (this.mode() === 'switchType') {
+          this.stateService.selectedValue.set('CC');
+        }
       }
-    })
+    }, {allowSignalWrites: true});
   }
 
   async openFile() {
@@ -183,12 +187,12 @@ export class SettingsComponent {
   // }
 
   setAnimationValueOptions(event: Event) {
-    this.animationValue = this.animationService.animationTypes[this.animationType].range[0];
+    this.stateService.selectedValue.set(this.animationService.animationTypes[this.animationType].range[0]);
     this.showLighting();
   }
 
   showLighting() {
-    this.midiService.setAnimation(this.selectedEncoders().map(encoder => ({ animation: +this.animationValue, cc: encoder.cc })));
+    this.midiService.setAnimation(this.selectedEncoders().map(encoder => ({ animation: +this.stateService.selectedValue(), cc: encoder.cc })));
     if (this.animationType > 0 && this.animationType < 5) {
       this.rgbActive.set(true);
       this.indicatorActive.set(false);
@@ -221,28 +225,28 @@ export class SettingsComponent {
     const encoders = this.controllerConfigService.controllerData()!.bank.flatMap(bank => bank.encoder);
     if (this.mode() === 'lighting') {
       for (const encoder of this.selectedEncoders()) {
-        encoders.find(enc => enc.position === encoder.position)!.animation = +this.animationValue;
+        encoders.find(enc => enc.position === encoder.position)!.animation = +this.stateService.selectedValue();
       }
     }
 
-    if (this.mode() === 'shift') {
-      for (const encoder of this.selectedEncoders()) {
-        const found = encoders.find(enc => enc.position === encoder.position);
-        if (found) { found.isShift = this.isShift; }
-      }
-      for (const side of (['leftSide', 'rightSide'] as const)) {
-        for (const button of this.selectedButtons()) {
-          const found = this.controllerConfigService.controllerData()!.bank[this.activeBank()][side].find(enc => enc.cc === button.cc);
-          if (found) { found.isShift = this.isShift; }
-        }
-      }
-    }
+    // if (this.mode() === 'shift') {
+    //   for (const encoder of this.selectedEncoders()) {
+    //     const found = encoders.find(enc => enc.position === encoder.position);
+    //     if (found) { found.isShift = this.isShift; }
+    //   }
+    //   for (const side of (['leftSide', 'rightSide'] as const)) {
+    //     for (const button of this.selectedButtons()) {
+    //       const found = this.controllerConfigService.controllerData()!.bank[this.activeBank()][side].find(enc => enc.cc === button.cc);
+    //       if (found) { found.isShift = this.isShift; }
+    //     }
+    //   }
+    // }
 
-    if (this.mode() === 'switchType') {
-      for (const encoder of this.selectedEncoders()) {
-        encoders.find(enc => enc.position === encoder.position)!.encoderType = this.encoderType;
-      }
-    }
+    // if (this.mode() === 'switchType') {
+    //   for (const encoder of this.selectedEncoders()) {
+    //     encoders.find(enc => enc.position === encoder.position)!.encoderType = this.encoderType;
+    //   }
+    // }
 
     this.controllerDataOriginal = JSON.parse(JSON.stringify(this.controllerConfigService.controllerData()));
     window.api.writeData(this.controllerConfigService.controllerData());

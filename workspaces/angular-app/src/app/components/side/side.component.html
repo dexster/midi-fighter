@@ -1,9 +1,6 @@
 <div class="side {{ side() }}">
 	@for (button of buttons(); track button.cc; let idx = $index) {
-	<div class="button-container cc{{ button.cc }}" [ngClass]="{
-					'prev': button.cc < 4 && side() === 'left',
-					'next': button.cc < 4 && side() === 'right'
-				}" (click)="setSelected($event, button)">
+	<div class="button-container cc{{ button.cc }}" >
 		<div class="text-container">
 			@if (mode() !== 'edit') {
 			{{ button.switch }}
@@ -11,7 +8,11 @@
 			<input [(ngModel)]="button.switch" />
 			}
 		</div>
-		<div class="button"></div>
+		<div class="button" [ngClass]="{
+			'active': button.isShift && mode() === 'shift',
+						'prev': button.cc < 4 && side() === 'left',
+						'next': button.cc < 4 && side() === 'right'
+					}" (click)="setSelected($event, button)"></div>
 	</div>
 	}
 </div>

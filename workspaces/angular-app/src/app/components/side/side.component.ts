@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, ElementRef, Renderer2, effect, inject, input, model } from '@angular/core';
+import { Component, ElementRef, Renderer2, Signal, effect, inject, input, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { filter } from 'rxjs';
 import { ButtonAction } from 'shared-lib/models/controller';
@@ -15,15 +15,16 @@ import { MidiService } from 'src/app/services/midi';
 })
 export class SideComponent {
   mode = input<string>();
-  buttons = input<ButtonAction[]>();
+  buttons = input.required<ButtonAction[]>();
   side = input<'left' | 'right'>();
   shiftActive = model<boolean>();
   activeBank = model<number>();
   message: MidiEvent;
-  selectedButtons = model<ButtonAction[]>([]);
 
   midi = inject(MidiService);
   renderer = inject(Renderer2);
+
+  selected$: Signal<boolean> = signal<boolean>(false);
 
   constructor(private el: ElementRef) {
     this.midi.message$.pipe(
@@ -48,13 +49,8 @@ export class SideComponent {
   }
 
   setSelected(event: Event, button: ButtonAction) {
-    if (this.mode() === 'shift') {
-      if (this.selectedButtons().includes(button)) {
-        this.selectedButtons.set(this.selectedButtons().filter(selectedButton => selectedButton !== button));
-      } else {
-        this.selectedButtons.set([...this.selectedButtons(), button]);
-      }
-      (event.currentTarget as HTMLElement).classList.toggle('active');
+    if (this.mode() === 'shift' && button.cc > 3) {
+      button.isShift = !button.isShift;
     }
     else if (this.mode() !== 'performance') {
       if ((event.currentTarget as HTMLElement).classList.contains('prev') && this.activeBank()! > 0) {

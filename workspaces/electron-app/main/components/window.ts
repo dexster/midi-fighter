@@ -89,7 +89,12 @@ export class Window {
 					label: `Cancel`,
 					accelerator: 'Esc',
 					click: () => this._electronWindow!.webContents.send('edit', 'cancel')
-				}
+				},
+				{ type: "separator" },
+        { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+        { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+        { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+        { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
 			]
 		},
 		{
@@ -160,7 +165,6 @@ export class Window {
 	}
 
 	updateMenu = async (e: any, action: string) => {
-		console.log('updateMenu - action: ', action)
 		let submenu: any[];
 		switch (action) {
 			case 'midi-values':
@@ -171,16 +175,16 @@ export class Window {
 			case 'edit':
 				submenu = this.template.find((item) => item.label === 'Edit')!.submenu;
 				submenu.forEach((item, index) => {
-					if (index < submenu.length - 1) { item.enabled = false };
+					if (item.label?.includes('Edit')) { item.enabled = false };
+					if (item.label?.includes('Cancel')) { item.enabled = true };
 				});
-				submenu[submenu.length - 1].enabled = true;
 				break;
 			case 'cancel':
 				submenu = this.template.find((item) => item.label === 'Edit')!.submenu;
 				submenu.forEach((item, index) => {
-					if (index < submenu.length) { item.enabled = true };
+					if (item.label?.includes('Edit')) { item.enabled = true };
+					if (item.label?.includes('Cancel')) { item.enabled = false };
 				});
-				submenu[submenu.length - 1].enabled = false;
 				break;
 		}
 

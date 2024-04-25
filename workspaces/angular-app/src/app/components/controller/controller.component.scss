@@ -22,62 +22,6 @@ img {
         }
     }
 
-    .system-actions {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        >img {
-            cursor: pointer;
-            margin-left: 16px;
-        }
-    }
-
-    .app-actions {
-        position: absolute;
-        left: 16px;
-        top: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        select {
-            height: 30px;
-        }
-
-        >div {
-            display: none;
-            min-width: 40px;
-            padding: 0 8px;
-        }
-
-        .encoder-visual {
-            width: 40px;
-            height: 40px;
-        }
-
-        .lighting {
-            &.active {
-                display: flex;
-            }
-        }
-
-        .performance {
-            &.active {
-                display: flex;
-            }
-        }
-
-        .edit {
-            &.active {
-                display: flex;
-            }
-        }
-    }
-
     .title {
         display: flex;
         align-items: center;
@@ -124,9 +68,14 @@ img {
 
         img {
             display: none;
+            cursor: pointer;
+            height: 22px;
 
-            &.active {
+            &.visible {
                 display: block;
+            }
+            &.active {
+                filter: invert(48%) sepia(97%) saturate(1005%) hue-rotate(80deg) brightness(87%) contrast(85%);
             }
         }
     }

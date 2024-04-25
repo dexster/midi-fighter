@@ -32,7 +32,6 @@ export class ControllerComponent {
   animationType = 0;
   message: Signal<MidiEvent | null | undefined>;
   selectedEncoders = signal([]);
-  selectedButtons  = signal([]);
 
   midiService = inject(MidiService);
   controllerConfigService = inject(ControllerConfigService);

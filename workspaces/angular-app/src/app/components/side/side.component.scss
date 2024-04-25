@@ -19,10 +19,10 @@
             background-color: var(--medium-grey);
             border: 3px solid var(--light-grey);
             border-radius: 50%;
-        }
 
-        &.active .button {
-            background-color: var(--active);
+            &.active {
+                background-color: var(--active);
+            }
         }
     }
 

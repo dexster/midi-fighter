@@ -1,5 +1,5 @@
 <div #mfContainer class="mf-container">
-	<app-settings #settings [activeBank]="activeBank()" [selectedButtons]="selectedButtons()"
+	<app-settings #settings [activeBank]="activeBank()" 
 		[selectedEncoders]="selectedEncoders()" [(mode)]="mode"
 		[(rgbActive)]="rgbActive" [(indicatorActive)]="indicatorActive" />
 
@@ -20,8 +20,8 @@
 
 	<div class="sub-title">
 		<h3>Bank {{activeBank() + 1}}</h3>
-		<img src="./assets/shift.svg" [ngClass]="{'active': mode() === 'edit'}"
-			(click)="shiftActive.set(!shiftActive())" />
+		<img src="./assets/shift.svg" [ngClass]="{'visible': mode() === 'edit', 'active': shiftActive()}"
+			(click)="shiftActive.set(!shiftActive())" title="Edit Shift labels" />
 	</div>
 
 	@if (settings.showMessage()) {
@@ -29,7 +29,7 @@
 	}
 
 	<div class="controller">
-		<app-side [(selectedButtons)]="selectedButtons" [mode]="mode()"
+		<app-side [mode]="mode()"
 			[buttons]="controllerConfigService.controllerData()![actionType()][activeBank()].leftSide" side="left" [(shiftActive)]="shiftActive"
 			[(activeBank)]="activeBank" />
 		<div class="encoders" [ngClass]="{ active: mode() === 'lighting' }">
@@ -43,7 +43,7 @@
 				 />
 			}
 		</div>
-		<app-side [(selectedButtons)]="selectedButtons" [mode]="mode()"
+		<app-side [mode]="mode()"
 			[buttons]="controllerConfigService.controllerData()![actionType()][activeBank()].rightSide" side="right"
 			[(activeBank)]="activeBank" />
 	</div>

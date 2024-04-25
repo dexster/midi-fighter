@@ -5,6 +5,8 @@ import { Injectable } from "@angular/core";
 })
 export class AnimationService {
 
+    selectedValue = -1;
+
     animationTypes = [
         {
             name: 'Off',
@@ -46,5 +48,9 @@ export class AnimationService {
 
     getAnimationType(value: number) {
         return this.animationTypes.find(animation => this.range(animation.range[0], animation.range[1]).includes(value))?.name;
+    }
+
+    setSelecteValue(value: number) {
+        this.selectedValue = value;
     }
 }
