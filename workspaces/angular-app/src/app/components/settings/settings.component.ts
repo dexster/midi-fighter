@@ -27,13 +27,10 @@ export class SettingsComponent {
   mode = model<Mode>();
   buttons = input<ButtonAction[]>();
   side = input<Side>();
-  // shiftActive = model<boolean>();
-  // actionType = computed(() => this.shiftActive() ? 'shiftBank' : 'bank');
   activeBank = input.required<number>();
   controllerDataOriginal: ControllerData;
   showMessage = signal(false);
   animationType = 0;
-  // animationValue = -1;
   encoderType: EncoderType = 'CC';
   rgbActive = model<boolean>();
   indicatorActive = model<boolean>();
@@ -48,7 +45,6 @@ export class SettingsComponent {
   ngZone = inject(NgZone);
 
   constructor() {
-
     window.api.onFile(fileAction => {
       console.log('fileAction:', fileAction);
       this.ngZone.run(() => {
@@ -177,15 +173,6 @@ export class SettingsComponent {
     }
   }
 
-  // setMode(mode: Mode) {
-  //   this.mode.set(mode);
-  //   // deep clone the controllerdata in edit mode
-  //   if (mode === 'edit') {
-  //     this.controllerDataOriginal = JSON.parse(JSON.stringify(this.controllerConfigService.controllerData()));
-  //     console.log('controllerDataOriginal: ', this.controllerDataOriginal);
-  //   }
-  // }
-
   setAnimationValueOptions(event: Event) {
     this.stateService.selectedValue.set(this.animationService.animationTypes[this.animationType].range[0]);
     this.showLighting();
@@ -229,37 +216,7 @@ export class SettingsComponent {
       }
     }
 
-    // if (this.mode() === 'shift') {
-    //   for (const encoder of this.selectedEncoders()) {
-    //     const found = encoders.find(enc => enc.position === encoder.position);
-    //     if (found) { found.isShift = this.isShift; }
-    //   }
-    //   for (const side of (['leftSide', 'rightSide'] as const)) {
-    //     for (const button of this.selectedButtons()) {
-    //       const found = this.controllerConfigService.controllerData()!.bank[this.activeBank()][side].find(enc => enc.cc === button.cc);
-    //       if (found) { found.isShift = this.isShift; }
-    //     }
-    //   }
-    // }
-
-    // if (this.mode() === 'switchType') {
-    //   for (const encoder of this.selectedEncoders()) {
-    //     encoders.find(enc => enc.position === encoder.position)!.encoderType = this.encoderType;
-    //   }
-    // }
-
     this.controllerDataOriginal = JSON.parse(JSON.stringify(this.controllerConfigService.controllerData()));
     window.api.writeData(this.controllerConfigService.controllerData());
-
-    // const filePath = await window.api.saveFileDialog('midi-actions.json')
-    // const json = JSON.stringify(this.controllerConfigService.controllerData());
-    // console.log('this.controllerData(): ', this.controllerConfigService.controllerData());
-    // if (filePath) {
-    //   window.api.writeData(json);
-    //   this.ngZone.run(async () => {
-    //   this.setMode('performance');
-    //   this.shiftActive.set(false);
-    //   });
-    // }
   }
 }

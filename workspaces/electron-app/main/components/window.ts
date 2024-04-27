@@ -88,13 +88,14 @@ export class Window {
 				{
 					label: `Cancel`,
 					accelerator: 'Esc',
+					enabled: false,
 					click: () => this._electronWindow!.webContents.send('edit', 'cancel')
 				},
 				{ type: "separator" },
-        { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-        { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-        { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-        { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+				{ label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+				{ label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+				{ label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+				{ label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
 			]
 		},
 		{
@@ -131,8 +132,8 @@ export class Window {
 
 	private createWindow(): void {
 		this._electronWindow! = new BrowserWindow({
-			width: 1200,
-			height: 1200,
+			width: 950,
+			height: 700,
 			backgroundColor: '#FFFFFF',
 			icon: this.setDockIcon(),
 			webPreferences: {
@@ -262,19 +263,20 @@ export class Window {
 		return await dialog.showMessageBox(options);
 	}
 
-	async handleFileOpenDialog(e: any, defaultPath: string): Promise<string> {
+	handleFileOpenDialog = async(e: any, defaultPath: string): Promise<string> => {
 		console.log('handleFileOpenDialog', defaultPath)
 		const { canceled, filePaths } = await dialog.showOpenDialog({
 			defaultPath: defaultPath,
 			filters: [{ name: 'Data', extensions: ['json'] }]
 		});
 		if (!canceled) {
+			console.log('handleFileOpenDialog - filePaths:', filePaths);
 			this.currentFilePath = filePaths[0];
 			const cfg = {
 				activePath: this.currentFilePath
 			}
 			await this.setConfig(cfg);
-			console.log('writeData - setConfig:', this.currentFilePath)
+			console.log('writeData - setConfig:', this.currentFilePath);
 			return filePaths[0];
 		}
 		return '';
