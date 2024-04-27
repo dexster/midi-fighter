@@ -29,11 +29,9 @@
 	}
 
 	<div class="controller">
-		<div class="side">
-			@for (button of controllerConfigService.controllerData()![actionType()][activeBank()].leftSide; track $index) {
-				<app-side-button [mode]="mode()" [button]="button" side="left" [(activeBank)]="activeBank"  />
-			}
-		</div>
+		<app-side [mode]="mode()"
+			[buttons]="controllerConfigService.controllerData()![actionType()][activeBank()].leftSide" side="left" 
+			[(activeBank)]="activeBank" />
 		<div class="encoders" [ngClass]="{ active: mode() === 'lighting' }">
 			@for (
 			encoder of controllerConfigService.controllerData()![actionType()][activeBank()].encoder;
@@ -45,11 +43,9 @@
 				 />
 			}
 		</div>
-		<div class="side">
-			@for (button of controllerConfigService.controllerData()![actionType()][activeBank()].rightSide; track $index) {
-				<app-side-button [mode]="mode()" [button]="button" side="right" [(activeBank)]="activeBank"  />
-			}
-		</div>
+		<app-side [mode]="mode()"
+			[buttons]="controllerConfigService.controllerData()![actionType()][activeBank()].rightSide" side="right"
+			[(activeBank)]="activeBank" />
 	</div>
 	}
 </div>

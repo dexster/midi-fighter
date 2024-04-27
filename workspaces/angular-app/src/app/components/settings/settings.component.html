@@ -5,7 +5,7 @@
         </div>
         <div class="options">
             <select class="animation-type" [(ngModel)]="animationType" (change)="setAnimationValueOptions($event)">
-                <option [value]="-1">None</option>
+                <!-- <option [value]="-1">None</option> -->
                 @for (item of animationService.animationTypes; track item.name; let idx = $index) {
                 <option [value]="idx">{{item.name}}</option>
                 }
@@ -37,12 +37,18 @@
 
     <div class="shift mode" [ngClass]="{ active: mode() === 'shift' }">
         <h3>Set Shift Modifiers</h3>
-        <p>
-        Select the switches<br>that enable shift mode</p>
+        <p>Select the switches<br>that enable shift mode</p>
+    </div>
+
+    <div class="midi mode" [ngClass]="{ active: mode() === 'midi' }">
+        <h3>Set Midi Values</h3>
+        <p>Set values and min/max limits</p>
     </div>
 
     <div class="edit mode" [ngClass]="{ active: mode() === 'edit' }">
         <h3>Edit Actions</h3>
+        <p>Add labels for switch, encoder<br>and super knob actions,<br>
+        Click the shift icon to add shift actions</p>
     </div>
 
     <!-- <div class="edit mode" [ngClass]="{ active: mode() !== 'performance' }">

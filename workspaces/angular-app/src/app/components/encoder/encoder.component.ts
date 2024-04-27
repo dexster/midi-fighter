@@ -37,6 +37,8 @@ export class EncoderComponent {
   stateService = inject(StateService);
 
   dashArray = signal('30 210');
+  strokeWidth = signal(0);
+  transformRotation = signal(138);
 
   selected$: Signal<boolean> = signal<boolean>(false);
 
@@ -61,13 +63,13 @@ export class EncoderComponent {
     })
   }
 
-  setState() {
-    const found = this.selectedEncoders().find(encoder => encoder.position === this.position());
-    if (found) {
-      return !!found.isShift;
-    }
-    return !!found;
-  }
+  // setState() {
+  //   const found = this.selectedEncoders().find(encoder => encoder.position === this.position());
+  //   if (found) {
+  //     return !!found.isShift;
+  //   }
+  //   return !!found;
+  // }
 
   timeoutId: any;
 
@@ -81,19 +83,28 @@ export class EncoderComponent {
           if (this.mode() === 'performance') {
             if (this.encoder()!.encoderType === 'CC') {
               let highlightedLEDs = Math.ceil(message.velocity / (127 / 11));
-              let dashArray = '30';
+              let dashArray = '';
+              this.strokeWidth.set(highlightedLEDs === 0 ? 0 : 10);
               for (let i = 1; i <= highlightedLEDs; i++) {
-                dashArray += ` 16.9 0`;
+                dashArray += `0 `;
+                if (i < highlightedLEDs) {
+                  dashArray += '16.90 ';
+                }
               }
-              dashArray += ' 210';
+              dashArray += '260';
               this.dashArray.set(dashArray);
             }
             else {
               clearTimeout(this.timeoutId);
+              this.strokeWidth.set(10);
               this.endlessActive.set(true);
-              this.dashArray.set(message.velocity === 63
-                ? '30 84 0 16.9 0 120'
-                : '30 101 0 16.9 0 100');
+              if (message.velocity === 63) {
+                this.transformRotation.set(215);
+                this.dashArray.set('0 16.9 0 220');
+              } else {
+                this.transformRotation.set(295);
+                this.dashArray.set('0 16.9 0 220');
+              }
             }
             this.timeoutId = setTimeout(() => {
               this.endlessActive.set(false);

@@ -127,56 +127,56 @@ img {
             flex-direction: column;
             justify-content: space-evenly;
         
-            // input {
-            //     width: 100px;
-            // }
+            input {
+                width: 100px;
+            }
         
-            // >div {
-            //     justify-content: flex-end;
+            >div {
+                justify-content: flex-end;
         
-            //     .button {
-            //         width: 40px;
-            //         height: 40px;
-            //         background-color: var(--medium-grey);
-            //         border: 3px solid var(--light-grey);
-            //         border-radius: 50%;
+                .button {
+                    width: 40px;
+                    height: 40px;
+                    background-color: var(--medium-grey);
+                    border: 3px solid var(--light-grey);
+                    border-radius: 50%;
         
-            //         &.active {
-            //             background-color: var(--active);
-            //         }
-            //     }
-            // }
+                    &.active {
+                        background-color: var(--active);
+                    }
+                }
+            }
         
-            // &.left {
-            //     margin-right: -30px;
+            &.left {
+                margin-right: -30px;
         
-            //     >div {
-            //         display: flex;
-            //         text-align: right;
-            //         align-items: center;
+                >div {
+                    display: flex;
+                    text-align: right;
+                    align-items: center;
         
-            //         .text-container {
-            //             width: 100px;
-            //             margin-right: 8px;
-            //         }
-            //     }
-            // }
+                    .text-container {
+                        width: 100px;
+                        margin-right: 8px;
+                    }
+                }
+            }
         
-            // &.right {
-            //     margin-left: -30px;
+            &.right {
+                margin-left: -30px;
         
-            //     >div {
-            //         display: flex;
-            //         align-items: center;
-            //         flex-direction: row-reverse;
+                >div {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: row-reverse;
         
-            //         .text-container {
-            //             width: 100px;
-            //             margin-left: 8px;
-            //         }
-            //     }
+                    .text-container {
+                        width: 100px;
+                        margin-left: 8px;
+                    }
+                }
         
-            // }
+            }
         }
     }
 }

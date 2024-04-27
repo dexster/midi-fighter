@@ -7,17 +7,16 @@ import { MidiEvent } from 'src/app/models/controller';
 import { MidiService } from 'src/app/services/midi';
 
 @Component({
-  selector: 'app-side',
+  selector: 'app-side-button',
   standalone: true,
   imports: [CommonModule, JsonPipe, FormsModule],
-  templateUrl: './side.component.html',
-  styleUrl: './side.component.scss'
+  templateUrl: './side-button.component.html',
+  styleUrl: './side-button.component.scss'
 })
-export class SideComponent {
+export class SideButtonComponent {
   mode = input<string>();
-  buttons = input.required<ButtonAction[]>();
+  button = input.required<ButtonAction>();
   side = input<'left' | 'right'>();
-  // shiftActive = model<boolean>();
   activeBank = model<number>();
   message: MidiEvent;
 
@@ -32,27 +31,24 @@ export class SideComponent {
     this.midi.message$.pipe(
       filter((message): message is MidiEvent => !!message))
       .subscribe(message => {
-        this.buttons()!.forEach(button => {
-          if (button.isShift && message.channel === 4 && message.cc === +button.cc && this.mode() === 'performance') {
+          if (this.button().isShift && message.channel === 4 && message.cc === +this.button().cc && this.mode() === 'performance') {
             console.log('setting active: ', message);
-            const button = this.el.nativeElement.querySelector(`.cc${message.cc}`);
             this.active = message.velocity > 0;
           }
-        });
       });
 
-    effect(() => {
-      if (this.mode() === 'performance') {
-        document.querySelectorAll('.button-container').forEach(buttonContainer => {
-          this.renderer.removeClass(buttonContainer, 'active');
-        });
-      }
-    });
+    // effect(() => {
+    //   if (this.mode() === 'performance') {
+    //     document.querySelectorAll('.button-container'.forEach(buttonContainer => {
+    //       this.renderer.removeClass(buttonContainer, 'active');
+    //     });
+    //   }
+    // });
   }
 
-  setSelected(event: Event, button: ButtonAction) {
-    if (this.mode() === 'shift' && button.cc > 3) {
-      button.isShift = !button.isShift;
+  setSelected(event: Event) {
+    if (this.mode() === 'shift' && this.button().cc > 3) {
+      this.button().isShift = !this.button().isShift;
     }
     else if (this.mode() !== 'performance') {
       if ((event.currentTarget as HTMLElement).classList.contains('prev') && this.activeBank()! > 0) {

@@ -1,0 +1,15 @@
+	<div class="button-container cc{{ button().cc }} {{side()}}">
+		<div class="text-container">
+			@if (mode() !== 'edit') {
+			{{ button().switch }}
+			} @else {
+			<input [(ngModel)]="button().switch" />
+			}
+		</div>
+		<div class="button" [ngClass]="{
+			'active': active || 
+			button().isShift && mode() === 'shift',
+			'prev': button().cc < 4 && side() === 'left',
+			'next': button().cc < 4 && side() === 'right'
+			}" (click)="setSelected($event)"></div>
+	</div>

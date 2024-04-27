@@ -10,7 +10,6 @@ import { MidiService } from '../../services/midi';
 import { EncoderComponent } from '../encoder/encoder.component';
 import { SettingsComponent } from "../settings/settings.component";
 import { SideComponent } from "../side/side.component";
-import { SideButtonComponent } from '../side-button/side-button.component';
 
 @Component({
   selector: 'app-controller',
@@ -18,7 +17,7 @@ import { SideButtonComponent } from '../side-button/side-button.component';
   templateUrl: './controller.component.html',
   styleUrl: './controller.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, JsonPipe, FormsModule, SideButtonComponent, SettingsComponent, EncoderComponent]
+  imports: [CommonModule, JsonPipe, FormsModule, SideComponent, SettingsComponent, EncoderComponent]
 })
 export class ControllerComponent {
 

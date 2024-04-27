@@ -9,6 +9,10 @@ export class AnimationService {
 
     animationTypes = [
         {
+            name: 'None',
+            range: [-1, -1]
+        },
+        {
             name: 'Off',
             range: [0, 0]
         },
