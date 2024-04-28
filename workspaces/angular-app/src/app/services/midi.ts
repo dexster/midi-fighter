@@ -49,6 +49,7 @@ export class MidiService {
 
     initMidi() {
         // this.intervalId = setInterval(() => {
+        this.midiFighterAvailable.set(false);
         navigator.permissions.query({ name: "midi" as PermissionName }).then((result) => {
             console.log(result.state);
         });
@@ -84,7 +85,7 @@ export class MidiService {
             let velocity = Math.round(((ccConfig.max - ccConfig.min) / 127) * message.velocity + ccConfig.min);
             const output = this.selectedOutputDevice()!.output;
             output!.send([177, message.cc, velocity]);
-            this.midiOutMessage.set({channel: message.channel, cc: message.cc, velocity: velocity});
+            this.midiOutMessage.set({ channel: message.channel, cc: message.cc, velocity: velocity });
         }
     }
 
@@ -106,7 +107,18 @@ export class MidiService {
         for (const entry of this.midiAccess.inputs) {
             const input = entry[1];
 
-            if (!input.name.includes('Midi Fighter Twister')) {
+            if (input.name.includes('Midi Fighter Twister')) {
+                // clearInterval(this.intervalId);
+                this.midiFighterAvailable.set(true);
+                console.log('Midi Fighter Twister available')
+                this.midiFighter = {
+                    name: input.name,
+                    inputId: input.id,
+                    outputId: '',
+                    input: entry[1],
+                    output: null
+                };
+            } else {
                 this.midiDevices.push({
                     name: input.name,
                     inputId: input.id,
@@ -114,22 +126,11 @@ export class MidiService {
                     input: entry[1],
                     output: null
                 });
-            } else {
-                if (input.name.includes('Midi Fighter Twister')) {
-                    // clearInterval(this.intervalId);
-                    this.midiFighterAvailable.set(true);
-                    this.midiFighter = {
-                        name: input.name,
-                        inputId: input.id,
-                        outputId: '',
-                        input: entry[1],
-                        output: null
-                    };
-                }
-                console.log(
-                    `Input port [type:'${input.type}'] id:'${input.id}' manufacturer:'${input.manufacturer}' name:'${input.name}' version:'${input.version}'`,
-                );
             }
+
+            console.log(
+                `Input port [type:'${input.type}'] id:'${input.id}' manufacturer:'${input.manufacturer}' name:'${input.name}' version:'${input.version}'`,
+            );
         }
 
         let count = 0;

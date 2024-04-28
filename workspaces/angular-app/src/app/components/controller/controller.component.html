@@ -8,7 +8,7 @@
 		<h2>
 			@if (mode() !== 'edit') {
 			{{ controllerConfigService.controllerData()!.title }}
-			} @else if (mode() === 'edit') {
+			} @else {
 			<input [(ngModel)]="controllerConfigService.controllerData()!.title" />
 			}
 		</h2>

@@ -112,7 +112,7 @@ export class SettingsComponent {
           this.stateService.selectedValue.set('CC');
         }
       }
-    }, {allowSignalWrites: true});
+    }, { allowSignalWrites: true });
   }
 
   async openFile() {
@@ -147,29 +147,31 @@ export class SettingsComponent {
 
   async cancelEdit() {
     console.log('cancelEdit');
-    if (JSON.stringify(this.controllerConfigService.controllerData()) != JSON.stringify(this.controllerDataOriginal)) {
-      const messageResponse: MessageResponse = await window.api.showMessageBoxDialog({
-        message: 'Unsaved changes will be lost',
-        type: 'warning',
-        buttons: ['Continue editing', 'Save changes', 'Discard changes'],
-        defaultId: 0,
-        icon: 'icons/hide-icon.png'
-      });
-      console.log('messageResponse:', messageResponse);
-      if (messageResponse.response !== ConfirmOption['Continue editing']) {
-        if (messageResponse.response === ConfirmOption['Save changes']) {
-          console.log('saveValues')
-          this.saveValues();
-        } else if (messageResponse.response === ConfirmOption['Discard changes']) {
-          console.log('cancelling')
-          this.controllerConfigService.controllerData.set(this.controllerDataOriginal);
+    if (this.controllerDataOriginal) {
+      if (JSON.stringify(this.controllerConfigService.controllerData()) != JSON.stringify(this.controllerDataOriginal)) {
+        const messageResponse: MessageResponse = await window.api.showMessageBoxDialog({
+          message: 'Unsaved changes will be lost',
+          type: 'warning',
+          buttons: ['Continue editing', 'Save changes', 'Discard changes'],
+          defaultId: 0,
+          icon: 'icons/hide-icon.png'
+        });
+        console.log('messageResponse:', messageResponse);
+        if (messageResponse.response !== ConfirmOption['Continue editing']) {
+          if (messageResponse.response === ConfirmOption['Save changes']) {
+            console.log('saveValues')
+            this.saveValues();
+          } else if (messageResponse.response === ConfirmOption['Discard changes']) {
+            console.log('cancelling')
+            this.controllerConfigService.controllerData.set(this.controllerDataOriginal);
+          }
+          this.mode.set('performance');
+          window.api.updateMenu('cancel');
         }
+      } else {
         this.mode.set('performance');
         window.api.updateMenu('cancel');
       }
-    } else {
-      this.mode.set('performance');
-      window.api.updateMenu('cancel');
     }
   }
 
