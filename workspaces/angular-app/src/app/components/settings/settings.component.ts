@@ -220,5 +220,6 @@ export class SettingsComponent {
 
     this.controllerDataOriginal = JSON.parse(JSON.stringify(this.controllerConfigService.controllerData()));
     window.api.writeData(this.controllerConfigService.controllerData());
+    this.controllerConfigService.setConfig();
   }
 }

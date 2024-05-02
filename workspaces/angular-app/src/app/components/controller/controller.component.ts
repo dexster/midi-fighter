@@ -9,7 +9,6 @@ import { ControllerConfigService } from '../../services/controller-config.servic
 import { MidiService } from '../../services/midi';
 import { EncoderComponent } from '../encoder/encoder.component';
 import { SettingsComponent } from "../settings/settings.component";
-import { SideComponent } from "../side/side.component";
 import { SideButtonComponent } from '../side-button/side-button.component';
 
 @Component({
@@ -74,7 +73,7 @@ export class ControllerComponent {
   }
 
   checkIfShiftMessage(message: MidiEvent) {
-    if (message.actionType === 'CC switch' && this.controllerConfigService.shiftButtons.includes(message.cc)) {
+    if (message.actionType === 'CC switch' && this.controllerConfigService.shiftButtons.some(button => button.channel === message.channel && button.cc === message.cc)) {
       if (message.velocity === 127) {
         this.shiftActive.set(true);
         const animationCcs = this.controllerConfigService.controllerData()?.bank[this.activeBank()].encoder.filter((encoder): encoder is Required<EncoderAction> => encoder.animation != null).map(encoder => ({ animation: encoder.animation, cc: encoder.cc }));
